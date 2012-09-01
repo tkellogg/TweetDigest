@@ -87,7 +87,7 @@ namespace SendGrid.Controllers
             // 1. Come back to site, session ended so click "send me an email"
             // 2. Go to email, click link to get back in
 
-            return View();
+            return RedirectToAction("Index");
         }
     }
 }
