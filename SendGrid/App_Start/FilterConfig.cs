@@ -1,5 +1,5 @@
-﻿using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
+using SendGrid.App_Start;
 
 namespace SendGrid
 {
@@ -8,6 +8,7 @@ namespace SendGrid
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
             filters.Add(new HandleErrorAttribute());
+            filters.Add(new LogErrorsAttribute());
         }
     }
 }
