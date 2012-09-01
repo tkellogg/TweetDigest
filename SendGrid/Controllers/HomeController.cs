@@ -57,7 +57,6 @@ namespace SendGrid.Controllers
         /// <summary>
         /// 4. Twitter redirects back to this action where we finish creating the user
         /// </summary>
-        [HttpPost]
         public ActionResult AuthorizeCallback(string oauth_token, string oauth_verifier)
         {
             var requestToken = new OAuthRequestToken {Token = oauth_token};
@@ -65,7 +64,7 @@ namespace SendGrid.Controllers
             var accessToken = service.GetAccessToken(requestToken, oauth_verifier);
 
             service.AuthenticateWith(accessToken.Token, accessToken.TokenSecret);
-            var twitterUser = service.GetUserProfile();
+            var twitterUser = service.VerifyCredentials();
             var userId = (BsonObjectId) Session["userId"];
             var user = userRepository.GetById(userId);
             user.AuthData = new TwitterAuthData 
