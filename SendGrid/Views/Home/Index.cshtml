@@ -1,0 +1,24 @@
+﻿@model SendGrid.Models.SetEmailViewModel
+
+<section class="featured">
+    <div class="content-wrapper">
+        <hgroup class="title">
+            <h1> Welcome to the Favorbot</h1>
+            <h2> Let me keep you up to date</h2>
+        </hgroup>
+    </div>
+</section>
+<section class="content-wrapper main-content clear-fix">
+    @using(Html.BeginForm("Index"))
+    {
+        <fieldset>
+            <legend>Setup regular emails</legend>
+
+            <p>
+                @Html.TextBoxFor(x => x.UserEmail, new{placeholder = "UserEmail Address"})
+            </p>
+
+            <input type="submit" value="Send" />
+        </fieldset>
+    }
+</section>
