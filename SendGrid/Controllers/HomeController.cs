@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Web.Mvc;
 using Culminator.Models;
 using MongoDB.Bson;
 using TweetSharp;
@@ -39,20 +40,22 @@ namespace Culminator.Controllers
         [HttpPost]
         public ActionResult Index(SetEmailViewModel model)
         {
-            var user = new User {Email = model.UserEmail};
-            userRepository.Save(user);
-            context.UserId = user.Id;
-            return Authorize();
-        }
+            Action<User> setCurrentUser = u => context.UserId = u.Id;
 
-        /// <summary>
-        /// 3. Then they are forwarded to Twitter to get authorization
-        /// </summary>
-        private ActionResult Authorize()
-        {
-            var service = twitterFactory.Create();
-            var requestToken = service.GetRequestToken();
-            var uri = service.GetAuthorizationUri(requestToken);
+            var user = userRepository.GetByEmail(model.UserEmail);
+            if (user != null)
+            {
+                // if we're already OK with twitter, just go straight to the authenticated homepage
+                setCurrentUser(user);
+                return View("AuthenticatedHomePage", new AuthenticatedHomePageViewModel { Email = user.Email });
+            }
+
+            user = new User {Email = model.UserEmail};
+            userRepository.Save(user);
+            setCurrentUser(user);
+
+            // 3. Then they are forwarded to Twitter to get authorization
+            var uri = twitterFactory.GetAuthorizationUri();
             return RedirectPermanent(uri.ToString());
         }
 

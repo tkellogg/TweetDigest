@@ -45,24 +45,35 @@ namespace Culminator.Specs
         }
 
         [Fact]
-        public void PostIndex_sets_email_and_saves()
+        public void PostIndex_sets_email__saves_and_redirects_to_twitter()
         {
             mocker.Setup<IUserRepository>(x => x.Save(It.IsAny<User>())).Callback<User>(u =>
                 {
                     u.Id = BsonObjectId.Empty;
                     u.Email.ShouldEqual("test@example.com");
                 });
-            var twitter = new Mock<TwitterService>() {CallBase = false};
-            twitter.Setup(x => x.GetRequestToken()).Returns(new OAuthRequestToken());
-            twitter.Setup(x => x.GetAuthorizationUri(It.IsAny<OAuthRequestToken>()))
-                .Returns(new Uri("http://localhost"));
-            mocker.Setup<ITwitterFactory>(x => x.Create()).Returns(twitter.Object);
+            mocker.Setup<ITwitterFactory>(x => x.GetAuthorizationUri()).Returns(new Uri("http://twitter"));
 
             var viewModel = new SetEmailViewModel {UserEmail = "test@example.com"};
-            Sut.Index(viewModel);
+            Sut.Index(viewModel).ShouldBeType<RedirectResult>();
 
             mocker.VerifyAll();
             mocker.GetMock<IContext>().VerifySet(x => x.UserId);
+        }
+
+        [Fact]
+        public void PostIndex_reuses_existing_user_and_sends_to_AuthenticatedHomePage()
+        {
+            mocker.Setup<IUserRepository>(x => x.GetByEmail("test@example.com")).Returns(new User());
+            mocker.Setup<ITwitterFactory>(x => x.GetAuthorizationUri()).Returns(new Uri("http://twitter"));
+
+            var viewModel = new SetEmailViewModel {UserEmail = "test@example.com"};
+            var result = Sut.Index(viewModel).ShouldBeType<ViewResult>();
+
+            result.ViewName.ShouldEqual("AuthenticatedHomePage");
+            mocker.Verify<IUserRepository>(x => x.Save(It.IsAny<User>()), Times.Never());
+            mocker.GetMock<IContext>().VerifySet(x => x.UserId, 
+                "We need to set context.UserId because it was obviously not set in the previous HTTP request");
         }
     }
 }

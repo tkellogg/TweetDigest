@@ -1,7 +1,7 @@
-﻿using System;
+﻿using System.Linq;
 using MongoDB.Bson;
 using MongoDB.Driver;
-using TweetSharp;
+using MongoDB.Driver.Linq;
 
 namespace Culminator.Models
 {
@@ -9,6 +9,7 @@ namespace Culminator.Models
     {
         void Save(User user);
         User GetById(BsonObjectId id);
+        User GetByEmail(string email);
     }
 
     public class UserRepository : IUserRepository
@@ -28,6 +29,13 @@ namespace Culminator.Models
         public User GetById(BsonObjectId id)
         {
             return users.FindOneById(id);
+        }
+
+        public User GetByEmail(string email)
+        {
+            return (from user in users.AsQueryable()
+                    where user.Email == email
+                    select user).FirstOrDefault();
         }
     }
 }

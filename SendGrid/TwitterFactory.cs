@@ -1,4 +1,5 @@
-﻿using Culminator.Models;
+﻿using System;
+using Culminator.Models;
 using TweetSharp;
 
 namespace Culminator
@@ -6,6 +7,7 @@ namespace Culminator
     public interface ITwitterFactory
     {
         TwitterService Create();
+        Uri GetAuthorizationUri();
     }
 
     public class TwitterFactory : ITwitterFactory
@@ -29,6 +31,13 @@ namespace Culminator
 
             return new TwitterService(Config.Twitter.ConsumerKey, Config.Twitter.ConsumerSecret, 
                                       user.AuthData.Token, user.AuthData.Secret);
+        }
+
+        public Uri GetAuthorizationUri()
+        {
+            var service = Create();
+            var requestToken = service.GetRequestToken();
+            return service.GetAuthorizationUri(requestToken);
         }
     }
 }
