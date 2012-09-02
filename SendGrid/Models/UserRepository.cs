@@ -3,7 +3,7 @@ using MongoDB.Bson;
 using MongoDB.Driver;
 using TweetSharp;
 
-namespace SendGrid.Models
+namespace Culminator.Models
 {
     public interface IUserRepository
     {

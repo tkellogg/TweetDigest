@@ -1,10 +1,10 @@
 ﻿using System.Linq;
 using System.Web.Mvc;
+using Culminator.Models;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
-using SendGrid.Models;
 
-namespace SendGrid.Controllers
+namespace Culminator.Controllers
 {
     public class ErrorsController : Controller
     {

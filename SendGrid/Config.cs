@@ -1,6 +1,6 @@
 ﻿using System.Configuration;
 
-namespace SendGrid
+namespace Culminator
 {
     public static class Config
     {

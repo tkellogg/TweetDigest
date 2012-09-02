@@ -1,9 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SendGrid", "SendGrid\SendGrid.csproj", "{450C3A8E-EDC5-4AE4-9E2D-441EC3BC61D2}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{0CD07A0F-B330-4EE7-BE06-D0F2EC0F6A28}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Culminator", "SendGrid\Culminator.csproj", "{450C3A8E-EDC5-4AE4-9E2D-441EC3BC61D2}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{4A31C37F-296D-46C7-9085-84260947F766}"
 	ProjectSection(SolutionItems) = preProject
@@ -11,16 +9,18 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{4A31C3
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Culminator.Specs", "Culminator.Specs\Culminator.Specs.csproj", "{241F68A6-90DE-49FE-A935-C013C41212B1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{0CD07A0F-B330-4EE7-BE06-D0F2EC0F6A28}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0CD07A0F-B330-4EE7-BE06-D0F2EC0F6A28}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0CD07A0F-B330-4EE7-BE06-D0F2EC0F6A28}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0CD07A0F-B330-4EE7-BE06-D0F2EC0F6A28}.Release|Any CPU.Build.0 = Release|Any CPU
+		{241F68A6-90DE-49FE-A935-C013C41212B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{241F68A6-90DE-49FE-A935-C013C41212B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{241F68A6-90DE-49FE-A935-C013C41212B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{241F68A6-90DE-49FE-A935-C013C41212B1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{450C3A8E-EDC5-4AE4-9E2D-441EC3BC61D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{450C3A8E-EDC5-4AE4-9E2D-441EC3BC61D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{450C3A8E-EDC5-4AE4-9E2D-441EC3BC61D2}.Release|Any CPU.ActiveCfg = Release|Any CPU

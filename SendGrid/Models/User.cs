@@ -2,7 +2,7 @@
 using MongoDB.Bson;
 using TweetSharp;
 
-namespace SendGrid.Models
+namespace Culminator.Models
 {
     public class User
     {
@@ -15,7 +15,7 @@ namespace SendGrid.Models
             AuthData = new TwitterAuthData();
         }
 
-        public BsonObjectId Id { get; protected set; }
+        public BsonObjectId Id { get; set; }
         public string Email { get; set; }
 
         public TwitterAuthData AuthData

@@ -2,7 +2,8 @@ using System.Data.Entity.Design.PluralizationServices;
 using System.Globalization;
 using MongoDB.Driver;
 using StructureMap;
-namespace SendGrid {
+
+namespace Culminator {
     public static class IoC {
         public static IContainer Initialize() {
             var pluralizer = PluralizationService.CreateService(CultureInfo.CurrentCulture);

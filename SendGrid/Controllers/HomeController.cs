@@ -1,18 +1,21 @@
-﻿using System;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
+using Culminator.Models;
 using MongoDB.Bson;
-using SendGrid.Models;
 using TweetSharp;
 
-namespace SendGrid.Controllers
+namespace Culminator.Controllers
 {
     public class HomeController : Controller
     {
         private readonly IUserRepository userRepository;
+        private readonly IContext context;
+        private readonly ITwitterFactory twitterFactory;
 
-        public HomeController(IUserRepository userRepository)
+        public HomeController(IUserRepository userRepository, IContext context, ITwitterFactory twitterFactory)
         {
             this.userRepository = userRepository;
+            this.context = context;
+            this.twitterFactory = twitterFactory;
         }
 
         /// <summary>
@@ -20,10 +23,9 @@ namespace SendGrid.Controllers
         /// </summary>
         public ActionResult Index()
         {
-            var userId = Session["userId"] as BsonObjectId;
-            if (userId == null) return View();
+            var user = context.User;
+            if (user == null) return View();
 
-            var user = userRepository.GetById(userId);
             var viewModel = new AuthenticatedHomePageViewModel
                 {
                     Email = user.Email
@@ -39,7 +41,7 @@ namespace SendGrid.Controllers
         {
             var user = new User {Email = model.UserEmail};
             userRepository.Save(user);
-            Session["userId"] = user.Id;
+            context.UserId = user.Id;
             return Authorize();
         }
 
@@ -48,7 +50,7 @@ namespace SendGrid.Controllers
         /// </summary>
         private ActionResult Authorize()
         {
-            var service = new TwitterService(Config.Twitter.ConsumerKey, Config.Twitter.ConsumerSecret);
+            var service = twitterFactory.Create();
             var requestToken = service.GetRequestToken();
             var uri = service.GetAuthorizationUri(requestToken);
             return RedirectPermanent(uri.ToString());
@@ -60,13 +62,12 @@ namespace SendGrid.Controllers
         public ActionResult AuthorizeCallback(string oauth_token, string oauth_verifier)
         {
             var requestToken = new OAuthRequestToken {Token = oauth_token};
-            var service = new TwitterService(Config.Twitter.ConsumerKey, Config.Twitter.ConsumerSecret);
+            var service = twitterFactory.Create();
             var accessToken = service.GetAccessToken(requestToken, oauth_verifier);
 
             service.AuthenticateWith(accessToken.Token, accessToken.TokenSecret);
             var twitterUser = service.VerifyCredentials();
-            var userId = (BsonObjectId) Session["userId"];
-            var user = userRepository.GetById(userId);
+            var user = context.User;
             user.AuthData = new TwitterAuthData 
                     {Secret = accessToken.TokenSecret, Token = accessToken.Token};
             user.TwitterHandles.Add(twitterUser.ScreenName);

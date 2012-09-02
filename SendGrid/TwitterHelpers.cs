@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using TweetSharp;
 
-namespace SendGrid
+namespace Culminator
 {
     public class TwitterHelpers
     {

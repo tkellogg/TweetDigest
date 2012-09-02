@@ -1,7 +1,7 @@
 ﻿using System.Web.Mvc;
-using SendGrid.App_Start;
+using Culminator.App_Start;
 
-namespace SendGrid
+namespace Culminator
 {
     public class FilterConfig
     {

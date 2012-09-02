@@ -2,7 +2,7 @@
 using MongoDB.Driver;
 using StructureMap;
 
-namespace SendGrid.App_Start
+namespace Culminator.App_Start
 {
     public class LogErrorsAttribute : FilterAttribute, IExceptionFilter
     {

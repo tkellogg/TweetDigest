@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web.Mvc;
 using StructureMap;
 
-namespace SendGrid
+namespace Culminator
 {
     public class SmDependencyResolver : IDependencyResolver {
 

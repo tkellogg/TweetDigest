@@ -1,7 +1,7 @@
 ﻿using System;
 using MongoDB.Bson;
 
-namespace SendGrid.Models
+namespace Culminator.Models
 {
     public class Error
     {

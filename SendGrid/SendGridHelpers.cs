@@ -5,7 +5,7 @@ using System.Text;
 using SendGridMail;
 using TransportType = SendGridMail.TransportType;
 
-namespace SendGrid
+namespace Culminator
 {
     public class SendGridHelpers
     {
