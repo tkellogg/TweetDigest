@@ -9,16 +9,21 @@
     </div>
 </section>
 <section class="content-wrapper main-content clear-fix">
-    @using(Html.BeginForm("Index"))
+    @using(Html.BeginForm(null, null, FormMethod.Post, new{ @class = "form-inline"}))
     {
         <fieldset>
-            <legend>Setup regular emails</legend>
+            <legend>Sign up or Sign in</legend>
 
-            <p>
-                @Html.TextBoxFor(x => x.UserEmail, new{placeholder = "UserEmail Address"})
+            <p class="well">
+                We'll send you a verification email so you can get in. If this is your first time,
+                we also need you to authorize us to read your favorite tweets.
+            </p>
+            <p class="input-prepend">
+                <span class="add-on">Email</span>
+                @Html.TextBoxFor(x => x.UserEmail, new{placeholder = "jonny.cache@gmail.com", @class="span3"})
             </p>
 
-            <input type="submit" value="Send" />
+            <button type="submit" class="btn-primary btn">Send me my secret</button>
         </fieldset>
     }
 </section>

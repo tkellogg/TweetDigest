@@ -1,14 +1,27 @@
 ﻿@model Culminator.Models.AuthenticatedHomePageViewModel
 
-<article class="featured">
+<section class="featured">
     <div class="content-wrapper">
         <hgroup class="title">
             <h1> Welcome to the Favorbot</h1>
             <h2> Let me keep you up to date</h2>
         </hgroup>
-        <hgroup class="pull-right">
-            @Html.LabelFor(x => x.Email)
-            <img src="@Model.ProfilePicUrl" alt="@Model.TwitterHandle"/>
-        </hgroup>
     </div>
-</article>
+</section>
+<section class="content-wrapper main-content clear-fix">
+    <div class="pull-right btn-group">
+        <button class="btn dropdown-toggle" data-toggle="dropdown">
+            @Model.Email
+            <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+            <li>
+                <span class="icon-ok"></span>
+                <a href="#">@Model.Email</a>
+            </li>
+            <li>
+                <a href="/logout">Logout</a>
+            </li>
+        </ul>
+    </div>
+</section>

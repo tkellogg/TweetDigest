@@ -52,6 +52,13 @@ namespace Culminator.Models
 
     public class AuthenticatedHomePageViewModel
     {
+        public AuthenticatedHomePageViewModel(User user, TwitterUser twitter)
+        {
+            Email = user.Email;
+            ProfilePicUrl = twitter.ProfileImageUrl;
+            TwitterHandle = twitter.ScreenName;
+        }
+
         public string Email { get; set; }
         public string ProfilePicUrl { get; set; }
         public string TwitterHandle { get; set; }

@@ -8,6 +8,7 @@ namespace Culminator
     {
         TwitterService Create();
         Uri GetAuthorizationUri();
+        TwitterUser CurrentUser { get; }
     }
 
     public class TwitterFactory : ITwitterFactory
@@ -38,6 +39,15 @@ namespace Culminator
             var service = Create();
             var requestToken = service.GetRequestToken();
             return service.GetAuthorizationUri(requestToken);
+        }
+
+        public TwitterUser CurrentUser
+        {
+            get
+            {
+                var service = Create();
+                return service.GetUserProfile();
+            }
         }
     }
 }

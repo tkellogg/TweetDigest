@@ -26,10 +26,7 @@ namespace Culminator.Controllers
             var user = context.User;
             if (user == null) return View();
 
-            var viewModel = new AuthenticatedHomePageViewModel
-                {
-                    Email = user.Email
-                };
+            var viewModel = new AuthenticatedHomePageViewModel(user, twitterFactory.CurrentUser);
             return View("AuthenticatedHomePage", viewModel);
         }
 
@@ -46,7 +43,7 @@ namespace Culminator.Controllers
             {
                 // if we're already OK with twitter, just go straight to the authenticated homepage
                 setCurrentUser(user);
-                return View("AuthenticatedHomePage", new AuthenticatedHomePageViewModel { Email = user.Email });
+                return View("AuthenticatedHomePage", new AuthenticatedHomePageViewModel(user, twitterFactory.CurrentUser));
             }
 
             user = new User {Email = model.UserEmail};
