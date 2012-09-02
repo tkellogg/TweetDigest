@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Web.Mvc;
 using Culminator.Models;
-using MongoDB.Bson;
 using TweetSharp;
 
 namespace Culminator.Controllers

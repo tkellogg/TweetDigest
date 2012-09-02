@@ -62,9 +62,13 @@ namespace Culminator.Specs
         }
 
         [Fact]
-        public void PostIndex_reuses_existing_user_and_sends_to_AuthenticatedHomePage()
+        public void PostIndex_reuses_existing_user_and_sends_to_AuthenticatedHomePage_if_AuthData_is_valid()
         {
-            mocker.Setup<IUserRepository>(x => x.GetByEmail("test@example.com")).Returns(new User());
+            var user = new User
+                {
+                    AuthData = new TwitterAuthData {Secret = "foo", Token = "bar"}
+                };
+            mocker.Setup<IUserRepository>(x => x.GetByEmail("test@example.com")).Returns(user);
             mocker.Setup<ITwitterFactory>(x => x.GetAuthorizationUri()).Returns(new Uri("http://twitter"));
 
             var viewModel = new SetEmailViewModel {UserEmail = "test@example.com"};
