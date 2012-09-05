@@ -28,6 +28,8 @@ namespace TweetDigest.Specs
         {
             mocker.Setup<IContext>(x => x.User)
                 .Returns(new User {Email = "test@example.com"});
+            mocker.Use<ITwitterFactory>(x => x.CurrentUser == new TwitterUser()
+                && x.Create() == Mock.Of<TwitterService>());
 
             var result = Sut.Index().ShouldBeType<ViewResult>();
             result.ViewName.ShouldEqual("AuthenticatedHomePage");
@@ -38,6 +40,8 @@ namespace TweetDigest.Specs
         {
             mocker.Setup<IContext>(x => x.User)
                 .Returns(new User {Email = "test@example.com"});
+            mocker.Use<ITwitterFactory>(x => x.CurrentUser == new TwitterUser()
+                && x.Create() == Mock.Of<TwitterService>());
 
             var result = Sut.Index().ShouldBeType<ViewResult>();
             var model = result.Model.ShouldBeType<AuthenticatedHomePageViewModel>();
@@ -69,7 +73,9 @@ namespace TweetDigest.Specs
                     AuthData = new TwitterAuthData {Secret = "foo", Token = "bar"}
                 };
             mocker.Setup<IUserRepository>(x => x.GetByEmail("test@example.com")).Returns(user);
-            mocker.Setup<ITwitterFactory>(x => x.GetAuthorizationUri()).Returns(new Uri("http://twitter"));
+            mocker.Use<ITwitterFactory>(x => x.CurrentUser == new TwitterUser()
+                && x.GetAuthorizationUri() == new Uri("http://twitter")
+                && x.Create() == Mock.Of<TwitterService>());
 
             var viewModel = new SetEmailViewModel {UserEmail = "test@example.com"};
             var result = Sut.Index(viewModel).ShouldBeType<ViewResult>();
