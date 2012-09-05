@@ -85,7 +85,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SendGrid\TweetDigest.csproj">
+    <ProjectReference Include="..\TweetDigest\TweetDigest.csproj">
       <Project>{450C3A8E-EDC5-4AE4-9E2D-441EC3BC61D2}</Project>
       <Name>TweetDigest</Name>
     </ProjectReference>
