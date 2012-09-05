@@ -52,15 +52,19 @@ namespace Culminator.Models
 
     public class AuthenticatedHomePageViewModel
     {
-        public AuthenticatedHomePageViewModel(User user, TwitterUser twitter)
+        public AuthenticatedHomePageViewModel(User user, ITwitterFactory twitter)
         {
             Email = user.Email;
-            ProfilePicUrl = twitter.ProfileImageUrl;
-            TwitterHandle = twitter.ScreenName;
+            var twitterUser = twitter.CurrentUser;
+            ProfilePicUrl = twitterUser.ProfileImageUrl;
+            TwitterHandle = twitterUser.ScreenName;
+            var service = twitter.Create();
+            Favorites = service.ListFavoriteTweets(2, 5);
         }
 
-        public string Email { get; set; }
-        public string ProfilePicUrl { get; set; }
-        public string TwitterHandle { get; set; }
+        public string Email { get; private set; }
+        public string ProfilePicUrl { get; private set; }
+        public string TwitterHandle { get; private set; }
+        public IEnumerable<TwitterStatus> Favorites { get; private set; } 
     }
 }

@@ -26,8 +26,7 @@ namespace Culminator.Controllers
             var user = context.User;
             if (user == null) return View();
 
-            var viewModel = new AuthenticatedHomePageViewModel(user, twitterFactory.CurrentUser);
-            return View("AuthenticatedHomePage", viewModel);
+            return View("AuthenticatedHomePage", GetAuthenticatedHomePageViewModel(user));
         }
 
         /// <summary>
@@ -43,7 +42,8 @@ namespace Culminator.Controllers
             {
                 // if we're already OK with twitter, just go straight to the authenticated homepage
                 setCurrentUser(user);
-                return View("AuthenticatedHomePage", new AuthenticatedHomePageViewModel(user, twitterFactory.CurrentUser));
+                var viewModel = GetAuthenticatedHomePageViewModel(user);
+                return View("AuthenticatedHomePage", viewModel);
             }
 
             user = new User {Email = model.UserEmail};
@@ -53,6 +53,11 @@ namespace Culminator.Controllers
             // 3. Then they are forwarded to Twitter to get authorization
             var uri = twitterFactory.GetAuthorizationUri();
             return RedirectPermanent(uri.ToString());
+        }
+
+        private AuthenticatedHomePageViewModel GetAuthenticatedHomePageViewModel(User user)
+        {
+            return new AuthenticatedHomePageViewModel(user, twitterFactory);
         }
 
         /// <summary>

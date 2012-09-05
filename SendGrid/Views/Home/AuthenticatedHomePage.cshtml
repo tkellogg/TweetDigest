@@ -24,4 +24,17 @@
             </li>
         </ul>
     </div>
+    
+    <div class="pull-left">
+    @foreach(var favorite in Model.Favorites)
+    {
+        <div class="well well-small">
+            <div>
+                <img src="@favorite.Author.ProfileImageUrl"/>
+                @favorite.Author.ScreenName
+                @Html.Raw(favorite.TextAsHtml)
+            </div>
+        </div>
+    }
+    </div>
 </section>
