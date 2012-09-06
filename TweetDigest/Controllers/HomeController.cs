@@ -10,12 +10,15 @@ namespace TweetDigest.Controllers
         private readonly IUserRepository userRepository;
         private readonly IContext context;
         private readonly ITwitterFactory twitterFactory;
+        private readonly IMailController mailController;
 
-        public HomeController(IUserRepository userRepository, IContext context, ITwitterFactory twitterFactory)
+        public HomeController(IUserRepository userRepository, IContext context, ITwitterFactory twitterFactory,
+            IMailController mailController)
         {
             this.userRepository = userRepository;
             this.context = context;
             this.twitterFactory = twitterFactory;
+            this.mailController = mailController;
         }
 
         /// <summary>
@@ -35,20 +38,16 @@ namespace TweetDigest.Controllers
         [HttpPost]
         public ActionResult Index(SetEmailViewModel model)
         {
-            Action<User> setCurrentUser = u => context.UserId = u.Id;
-
             var user = userRepository.GetByEmail(model.UserEmail);
-            if (user != null)
+            if (user != null && user.AuthData.IsCompleted)
             {
-                // if we're already OK with twitter, just go straight to the authenticated homepage
-                setCurrentUser(user);
-                var viewModel = GetAuthenticatedHomePageViewModel(user);
-                return View("AuthenticatedHomePage", viewModel);
+                mailController.LoginEmail(user);
+                return View("PleaseCheckEmail");
             }
 
-            user = new User {Email = model.UserEmail};
+            user = user ?? new User {Email = model.UserEmail};
             userRepository.Save(user);
-            setCurrentUser(user);
+            context.UserId = user.Id;
 
             // 3. Then they are forwarded to Twitter to get authorization
             var uri = twitterFactory.GetAuthorizationUri();

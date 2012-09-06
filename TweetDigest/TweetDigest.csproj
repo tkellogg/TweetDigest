@@ -41,6 +41,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ActionMailer.Net">
+      <HintPath>..\packages\ActionMailer.0.7.4\lib\Net40\ActionMailer.Net.dll</HintPath>
+    </Reference>
+    <Reference Include="ActionMailer.Net.Mvc">
+      <HintPath>..\packages\ActionMailer.0.7.4\lib\Net40\ActionMailer.Net.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Hammock">
       <HintPath>..\packages\Hammock.1.3.0\lib\net40\Hammock.dll</HintPath>
     </Reference>
@@ -166,6 +173,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="MailController.cs" />
     <Compile Include="Models\Error.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\UserRepository.cs" />
@@ -276,6 +284,9 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\AuthenticatedHomePage.cshtml" />
     <Content Include="Views\Errors\Index.cshtml" />
+    <Content Include="Views\Mail\LoginEmail.cshtml" />
+    <Content Include="Views\Mail\_Layout.cshtml" />
+    <Content Include="Views\Home\PleaseCheckEmail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

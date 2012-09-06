@@ -1,0 +1,22 @@
+﻿@model TweetDigest.LoginEmailViewModel
+
+@{
+    ViewBag.Title = "LoginEmail";
+    Layout = "_Layout.cshtml";
+}
+
+<p>
+    Welcome to your weekly TweetDigest. We don't think you'll need to come to our site very often,
+    and it would be mean of us to make you remember another password. Use the link below and you'll stay
+    active for 30 days or until you log out. Next time you need to get in to change your account settings, 
+    we'll send you another email like this with a new link to login.
+</p>
+
+<p>
+    <a href="@Model.ReturnUrl">Click here to login</a>
+</p>
+
+<p>
+    Best of luck,<br/>
+    The TweetDigest Crew
+</p>
