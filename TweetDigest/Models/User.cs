@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using MongoDB.Bson;
 using TweetSharp;
 
@@ -17,6 +18,7 @@ namespace TweetDigest.Models
 
         public BsonObjectId Id { get; set; }
         public string Email { get; set; }
+        public Guid? LoginKey { get; set; }
 
         public TwitterAuthData AuthData
         {
@@ -37,6 +39,7 @@ namespace TweetDigest.Models
                 twitterHandles = value;
             }
         }
+
     }
 
     public class TwitterAuthData

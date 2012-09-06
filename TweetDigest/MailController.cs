@@ -12,15 +12,25 @@ namespace TweetDigest
 
     public class MailController : MailerBase, IMailController
     {
+        private readonly IUserRepository userRepository;
+
+        public MailController(IUserRepository userRepository)
+        {
+            this.userRepository = userRepository;
+        } 
+
         public EmailResult LoginEmail(User model)
         {
+            model.LoginKey = Guid.NewGuid();
+            userRepository.Save(model);
+
             Subject = "Welcome to TweetDigest";
             From = "no-reply@tweetdigest.apphb.com";
             To.Add(model.Email);
             return Email("LoginEmail", new LoginEmailViewModel
                 {
                     TwitterHandle = model.TwitterHandles.FirstOrDefault() ?? model.Email,
-                    ReturnUrl = "http://tweetdigest.apphb.com/login/" + Guid.NewGuid()
+                    ReturnUrl = "http://tweetdigest.apphb.com/login/" + model.LoginKey
                 });
         }
     }
