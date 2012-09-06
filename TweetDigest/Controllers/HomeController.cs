@@ -75,22 +75,18 @@ namespace TweetDigest.Controllers
                     {Secret = accessToken.TokenSecret, Token = accessToken.Token};
             user.TwitterHandles.Add(twitterUser.ScreenName);
             userRepository.Save(user);
-//            Session["userId"] = user.Id;
 
-            // Auth
-            // 1. Create a sessions collection - capped, expires after a month or two
-            // 2. { sessionId, userId, startDate }
-            // 3. Store sessionId in cookie, hashed with something other unique goodie
-            // 
-            // User flows
-            // 1. Come to site, get involved by entering your email + twitter handle
-            // 2. Forward to Twitter who has you authorize
-            // 3. Forwarded back to /AuthorizeCallback which creates the account and sets session cookie
-            // 4. Forwarded to home page that displays your latest favorites
-            //
-            // 1. Come back to site, session ended so click "send me an email"
-            // 2. Go to email, click link to get back in
+            return RedirectToAction("Index");
+        }
 
+        public ActionResult Login(Guid key)
+        {
+            var user = userRepository.GetByLoginKey(key);
+            if (user == null) return View("AccessDenied");
+            user.LoginKey = null;
+            userRepository.Save(user);
+            context.UserId = user.Id;
+            
             return RedirectToAction("Index");
         }
     }

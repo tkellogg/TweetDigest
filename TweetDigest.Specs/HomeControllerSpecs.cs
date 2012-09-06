@@ -104,5 +104,49 @@ namespace TweetDigest.Specs
                 mocker.Verify<IMailController>(x => x.LoginEmail(user));
             }
         }
+
+        public class When_returning_with_a_key
+        {
+            readonly AutoMocker mocker = new AutoMocker();
+            HomeController Sut { get { return mocker.CreateInstance<HomeController>(); } }
+
+            [Fact]
+            public void It_redirects_to_Index()
+            {
+                mocker.Setup<IUserRepository>(x => x.GetByLoginKey(Guid.Empty)).Returns(new User());
+                var result = Sut.Login(Guid.Empty).ShouldBeType<RedirectToRouteResult>();
+                result.RouteValues["action"].ShouldEqual("Index");
+            }
+
+            [Fact]
+            public void It_invalidates_the_key()
+            {
+                mocker.Setup<IUserRepository>(x => x.GetByLoginKey(Guid.Empty)).Returns(new User());
+                mocker.Setup<IUserRepository>(x => x.Save(It.IsAny<User>())).Callback<User>(u => u.LoginKey.ShouldBeNull());
+
+                Sut.Login(Guid.Empty);
+                mocker.VerifyAll();
+            }
+
+            [Fact]
+            public void It_sets_user_id() 
+            {
+                mocker.Setup<IUserRepository>(x => x.GetByLoginKey(Guid.Empty)).Returns(new User());
+                var context = new Mock<IContext>();
+                mocker.Use(context);
+
+                Sut.Login(Guid.Empty);
+
+                context.VerifySet(x => x.UserId = It.IsAny<BsonObjectId>());
+                mocker.VerifyAll();
+            }
+
+            [Fact]
+            public void It_redirects_to_AccessDenied_when_user_not_found()
+            {
+                var view = Sut.Login(Guid.Empty).ShouldBeType<ViewResult>();
+                view.ViewName.ShouldEqual("AccessDenied");
+            }
+        }
     }
 }
