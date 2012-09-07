@@ -79,9 +79,9 @@ namespace TweetDigest.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult Login(Guid key)
+        public ActionResult Login(Guid id)
         {
-            var user = userRepository.GetByLoginKey(key);
+            var user = userRepository.GetByLoginKey(id);
             if (user == null) return View("AccessDenied");
             user.LoginKey = null;
             userRepository.Save(user);

@@ -1,9 +1,11 @@
 using System.Data.Entity.Design.PluralizationServices;
 using System.Globalization;
+using System.Net;
+using ActionMailer.Net;
 using MongoDB.Driver;
 using StructureMap;
 
-namespace TweetDigest {
+namespace TweetDigest.DependencyResolution {
     public static class IoC {
         public static IContainer Initialize() {
             var pluralizer = PluralizationService.CreateService(CultureInfo.CurrentCulture);
@@ -23,6 +25,9 @@ namespace TweetDigest {
                                     var collectionName = pluralizer.Pluralize(modelType.Name);
                                     return db.GetCollection(modelType, collectionName);
                                 });
+                            x.For<IMailSender>().Use<SendGridMailSender>();
+                            x.For<NetworkCredential>().Use(new NetworkCredential(Config.SendGrid.User,
+                                                                                 Config.SendGrid.Password));
                         });
             return ObjectFactory.Container;
         }

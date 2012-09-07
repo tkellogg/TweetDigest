@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using ActionMailer.Net;
 using ActionMailer.Net.Mvc;
 using TweetDigest.Models;
 
@@ -14,9 +15,10 @@ namespace TweetDigest
     {
         private readonly IUserRepository userRepository;
 
-        public MailController(IUserRepository userRepository)
+        public MailController(IUserRepository userRepository, IMailSender mailSender)
         {
             this.userRepository = userRepository;
+            MailSender = mailSender;
         } 
 
         public EmailResult LoginEmail(User model)

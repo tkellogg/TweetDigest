@@ -1,5 +1,6 @@
 using System.Web.Mvc;
 using StructureMap;
+using TweetDigest.DependencyResolution;
 
 [assembly: WebActivator.PreApplicationStartMethod(typeof(TweetDigest.App_Start.StructuremapMvc), "Start")]
 
