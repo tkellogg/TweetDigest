@@ -41,7 +41,7 @@ namespace TweetDigest.Controllers
             var user = userRepository.GetByEmail(model.UserEmail);
             if (user != null && user.AuthData.IsCompleted)
             {
-                mailController.LoginEmail(user);
+                mailController.LoginEmail(user).Deliver();
                 return View("PleaseCheckEmail");
             }
 

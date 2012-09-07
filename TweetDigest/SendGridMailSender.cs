@@ -20,8 +20,9 @@ namespace TweetDigest
 
         public void Send(MailMessage mail)
         {
+            var body = mail.AlternateViews[0].ContentStream.ReadToEnd();
             var instance = SendGrid.GenerateInstance(mail.From, mail.To.ToArray(), mail.CC.ToArray(), mail.Bcc.ToArray(),
-                                                     mail.Subject, mail.Body, null, TransportType.REST);
+                                                     mail.Subject, body, null, TransportType.REST);
             instance.Mail(credential);
         }
 

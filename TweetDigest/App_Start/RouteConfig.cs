@@ -25,6 +25,12 @@ namespace TweetDigest
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
+
+            routes.MapRoute(
+                name: "Login",
+                url: "{controller}/login/{key}",
+                defaults: new { controller = "Home", action = "login" }
+            );
         }
     }
 }
