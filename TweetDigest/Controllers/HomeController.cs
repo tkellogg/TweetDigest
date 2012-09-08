@@ -89,5 +89,11 @@ namespace TweetDigest.Controllers
             
             return RedirectToAction("Index");
         }
+
+        public ActionResult Logout()
+        {
+            context.UserId = null;
+            return RedirectToAction("Index");
+        }
     }
 }
