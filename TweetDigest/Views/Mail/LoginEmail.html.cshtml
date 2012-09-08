@@ -13,7 +13,9 @@
 </p>
 
 <p>
-    <a href="@Model.ReturnUrl">Click here to login</a>
+    <a href="@Url.Action("Login", "Home", new{ id = Model.ReturnKey }, "http")">
+        Click here to login
+    </a>
 </p>
 
 <p>

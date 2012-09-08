@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Web.Mvc;
 using ActionMailer.Net;
 using ActionMailer.Net.Mvc;
 using TweetDigest.Models;
@@ -32,7 +33,7 @@ namespace TweetDigest
             return Email("LoginEmail", new LoginEmailViewModel
                 {
                     TwitterHandle = model.TwitterHandles.FirstOrDefault() ?? model.Email,
-                    ReturnUrl = "http://tweetdigest.apphb.com/login/" + model.LoginKey
+                    ReturnKey = model.LoginKey.Value
                 });
         }
     }
@@ -45,6 +46,6 @@ namespace TweetDigest
         /// <summary>
         /// The link they click on to log back in. Contains a unique string like a Guid or whatever
         /// </summary>
-        public string ReturnUrl { get; set; }
+        public Guid ReturnKey { get; set; }
     }
 }

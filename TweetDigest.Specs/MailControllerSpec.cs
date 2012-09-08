@@ -29,7 +29,7 @@ namespace TweetDigest.Specs
             Mock.Get(sut).Setup(x => x.Email("LoginEmail", It.IsAny<object>(), null, true))
                 .Callback<string, object, string, bool>((a, model, b, c) => 
                     model.ShouldBeType<LoginEmailViewModel>()
-                    .ReturnUrl.ShouldContain(key.ToString()));
+                    .ReturnKey.ShouldEqual(key.Value));
 
             sut.LoginEmail(new User{Email = "foo@bar.us"});
             mocker.VerifyAll();
