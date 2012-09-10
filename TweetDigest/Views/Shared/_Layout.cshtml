@@ -10,7 +10,10 @@
     <header>
         <div class="content-wrapper">
             <div class="float-right">
-                @Html.ActionLink("Logout", "Logout", "Home")
+                @if (Session["userId"] != null)
+                {
+                    @Html.ActionLink("Logout", "Logout", "Home")
+                }
             </div>
             <div class="float-left">
                 <p class="site-title">
