@@ -176,6 +176,7 @@
     </Compile>
     <Compile Include="MailController.cs" />
     <Compile Include="Models\Error.cs" />
+    <Compile Include="Models\TweetRepository.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\UserRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

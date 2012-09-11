@@ -40,6 +40,7 @@ namespace TweetDigest.Models
             }
         }
 
+        public DateTime EpochOfTweets { get; set; }
     }
 
     public class TwitterAuthData

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using MongoDB.Bson;
 using MongoDB.Driver;
@@ -12,6 +14,7 @@ namespace TweetDigest.Models
         User GetById(BsonObjectId id);
         User GetByEmail(string email);
         User GetByLoginKey(Guid loginKey);
+        IEnumerable<User> GetAll();
     }
 
     public class UserRepository : IUserRepository
@@ -45,6 +48,11 @@ namespace TweetDigest.Models
             return (from user in users.AsQueryable()
                     where user.LoginKey == loginKey
                     select user).FirstOrDefault();
+        }
+
+        public IEnumerable<User> GetAll()
+        {
+            return users.AsQueryable();
         }
     }
 }

@@ -7,6 +7,7 @@ namespace TweetDigest
     public interface ITwitterFactory
     {
         TwitterService Create();
+        TwitterService Create(User user);
         Uri GetAuthorizationUri();
         TwitterUser CurrentUser { get; }
     }
@@ -23,7 +24,11 @@ namespace TweetDigest
         public TwitterService Create()
         {
             var user = context.User;
+            return Create(user);
+        }
 
+        public TwitterService Create(User user)
+        {
             var isAuthenticated = user != null && !string.IsNullOrEmpty(user.AuthData.Secret)
                 && !string.IsNullOrEmpty(user.AuthData.Token);
 

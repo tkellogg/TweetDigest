@@ -1,13 +1,32 @@
 ﻿using System;
+using System.Linq;
 using Quartz;
+using TweetDigest.Models;
 
 namespace TweetDigest.Mailer
 {
     public class MailerJob : IJob
     {
+        private readonly IUserRepository userRepository;
+        private readonly ITweetRepository tweetRepository;
+        private readonly IMassMailController mail;
+
+        public MailerJob(IUserRepository userRepository, ITweetRepository tweetRepository, IMassMailController mail)
+        {
+            this.userRepository = userRepository;
+            this.tweetRepository = tweetRepository;
+            this.mail = mail;
+            Console.WriteLine("MailerJob.ctor");
+        }
+
         public void Execute(IJobExecutionContext context)
         {
-            Console.WriteLine("MailerJob");
+            Console.WriteLine("MailerJob.Execute");
+            foreach(var user in userRepository.GetAll())
+            {
+                var tweets = tweetRepository.GetFavoritesForUser(user).Where(t => t.CreatedDate > user.EpochOfTweets);
+                mail.WeeklyFavorite().Deliver();
+            }
         }
     }
 }
