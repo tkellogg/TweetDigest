@@ -25,7 +25,16 @@ namespace TweetDigest.Mailer
             foreach(var user in userRepository.GetAll())
             {
                 var tweets = tweetRepository.GetFavoritesForUser(user).Where(t => t.CreatedDate > user.EpochOfTweets);
-                mail.WeeklyFavorite().Deliver();
+                var vm = new FavoriteTweetViewModel
+                    {
+                        Tweets = tweets,
+                        User = user
+                    };
+
+                mail.WeeklyFavorite(vm).Deliver();
+
+                user.EpochOfTweets = DateTime.Now;
+                userRepository.Save(user);
             }
         }
     }

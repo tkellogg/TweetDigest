@@ -87,6 +87,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FavoriteTweetViewModel.cs" />
     <Compile Include="MailerJob.cs" />
     <Compile Include="MassMailController.cs" />
     <Compile Include="Program.cs" />
