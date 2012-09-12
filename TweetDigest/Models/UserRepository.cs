@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using MongoDB.Bson;
 using MongoDB.Driver;
+using MongoDB.Driver.Builders;
 using MongoDB.Driver.Linq;
 
 namespace TweetDigest.Models
@@ -15,6 +16,7 @@ namespace TweetDigest.Models
         User GetByEmail(string email);
         User GetByLoginKey(Guid loginKey);
         IEnumerable<User> GetAll();
+        void RemoveById(BsonObjectId userId);
     }
 
     public class UserRepository : IUserRepository
@@ -53,6 +55,11 @@ namespace TweetDigest.Models
         public IEnumerable<User> GetAll()
         {
             return users.AsQueryable();
+        }
+
+        public void RemoveById(BsonObjectId userId)
+        {
+            users.Remove(Query.EQ("_id", userId));
         }
     }
 }

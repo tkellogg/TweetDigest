@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Web.Mvc;
+using MongoDB.Bson;
 using TweetDigest.Models;
 using TweetSharp;
 
@@ -94,6 +95,14 @@ namespace TweetDigest.Controllers
         {
             context.UserId = null;
             return RedirectToAction("Index");
+        }
+
+        public ActionResult Unsubscribe(string id)
+        {
+            var userId = BsonObjectId.Parse(id);
+            userRepository.RemoveById(userId);
+            context.UserId = null;
+            return View("Unsubscribed");
         }
     }
 }

@@ -290,6 +290,7 @@
     <Content Include="Views\Mail\LoginEmail.html.cshtml" />
     <Content Include="Views\Mail\_Layout.cshtml" />
     <Content Include="Views\Home\PleaseCheckEmail.cshtml" />
+    <Content Include="Views\Home\Unsubscribed.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,8 +1,29 @@
-﻿@model TweetDigest.Mailer.FavoriteTweetViewModel
+﻿@using System.Web
 <html>
     <head>
     </head>
     <body>
-        
+        @foreach(var tweet in Model.Tweets)
+        {
+            <div style="display: block">
+                <table>
+                    <tr>
+                        <td><img src="@tweet.Author.ProfileImageUrl" /></td>
+                    </tr>
+                    <caption>
+                        @tweet.Author.ScreenName
+                    </caption>
+                </table>
+                <span>
+                    @Raw(tweet.TextAsHtml)
+                </span>
+            </div>
+        }
+        <p style="color: #888888">
+            This email has been sent to you because you explicitly requested it. If this is
+            not the case, we recommend that you
+            <a href="http://tweetdigest.apphb.com/home/unsubscribe/@Model.User.Id">Unsubscribe</a>
+            and we will kindly remove all of your information from our databases.
+        </p>
     </body>
 </html>

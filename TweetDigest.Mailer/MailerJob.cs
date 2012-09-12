@@ -33,7 +33,7 @@ namespace TweetDigest.Mailer
 
                 mail.WeeklyFavorite(vm).Deliver();
 
-                user.EpochOfTweets = DateTime.Now;
+                user.EpochOfTweets = DateTime.MinValue;
                 userRepository.Save(user);
             }
         }

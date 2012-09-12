@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using System.Web;
 using ActionMailer.Net.Standalone;
 
 namespace TweetDigest.Mailer
@@ -26,6 +27,11 @@ namespace TweetDigest.Mailer
         public override string ViewPath
         {
             get { return "Mail"; }
+        }
+
+        public HtmlString Raw(string raw)
+        {
+            return new HtmlString(raw);
         }
     }
 }
