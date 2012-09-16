@@ -62,9 +62,11 @@ namespace TweetDigest.Models
         {
             Email = user.Email;
             var twitterUser = twitter.CurrentUser;
+            if (twitterUser == null) throw new InvalidOperationException("twitterUser was not found or was just null");
             ProfilePicUrl = twitterUser.ProfileImageUrl;
             TwitterHandle = twitterUser.ScreenName;
             var service = twitter.Create();
+            if (twitterUser == null) throw new InvalidOperationException("Twitter service was null or just couldn't be constructed");
             Favorites = service.ListFavoriteTweets(2, 5);
         }
 
