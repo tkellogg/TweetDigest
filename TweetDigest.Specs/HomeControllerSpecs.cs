@@ -1,5 +1,9 @@
 ﻿using System;
+using System.Net.Mail;
+using System.Text;
 using System.Web.Mvc;
+using ActionMailer.Net;
+using ActionMailer.Net.Mvc;
 using MongoDB.Bson;
 using Moq;
 using Moq.AutoMock;
@@ -99,6 +103,7 @@ namespace TweetDigest.Specs
                         AuthData = new TwitterAuthData {Secret = "foo", Token = "bar"}
                     };
                 mocker.Use<IUserRepository>(x => x.GetByEmail("foo@bar.us") == user);
+                mocker.Use<IMailController>(x => x.LoginEmail(user) == new EmailResult(Mock.Of<IMailInterceptor>(), Mock.Of<IMailSender>(), new MailMessage(), string.Empty, string.Empty, Encoding.Default, false));
 
                 Sut.Index(new SetEmailViewModel {UserEmail = "foo@bar.us"});
                 mocker.Verify<IMailController>(x => x.LoginEmail(user));
