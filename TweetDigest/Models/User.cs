@@ -47,6 +47,7 @@ namespace TweetDigest.Models
     {
         public string Token { get; set; }
         public string Secret { get; set; }
+        public int? TwitterId { get; set; }
 
         public bool IsCompleted { get { return !string.IsNullOrEmpty(Token) && !string.IsNullOrEmpty(Secret); } }
     }

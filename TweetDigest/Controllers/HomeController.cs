@@ -71,9 +71,13 @@ namespace TweetDigest.Controllers
 
             service.AuthenticateWith(accessToken.Token, accessToken.TokenSecret);
             var twitterUser = service.VerifyCredentials();
-            var user = context.User;
+            if (twitterUser == null) return HttpNotFound("Dude, Twitter has no idea who you are.");
+
+            var user = userRepository.GetByTwitterId(twitterUser.Id) ?? context.User;
+            if (user == null) return HttpNotFound("I'm sorry, I don't remember seeing you before. Have we met?");
+
             user.AuthData = new TwitterAuthData 
-                    {Secret = accessToken.TokenSecret, Token = accessToken.Token};
+                    {Secret = accessToken.TokenSecret, Token = accessToken.Token, TwitterId = twitterUser.Id};
             user.TwitterHandles.Add(twitterUser.ScreenName);
             userRepository.Save(user);
 

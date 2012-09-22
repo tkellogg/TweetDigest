@@ -17,6 +17,7 @@ namespace TweetDigest.Models
         User GetByLoginKey(Guid loginKey);
         IEnumerable<User> GetAll();
         void RemoveById(BsonObjectId userId);
+        User GetByTwitterId(int id);
     }
 
     public class UserRepository : IUserRepository
@@ -60,6 +61,11 @@ namespace TweetDigest.Models
         public void RemoveById(BsonObjectId userId)
         {
             users.Remove(Query.EQ("_id", userId));
+        }
+
+        public User GetByTwitterId(int id)
+        {
+            return users.AsQueryable().FirstOrDefault(user => user.AuthData.TwitterId == id);
         }
     }
 }
